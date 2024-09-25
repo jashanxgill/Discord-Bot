@@ -16,34 +16,18 @@ async def hello(ctx):
 @bot.tree.command(name="hello", description="Say hello!")
 async def hello(interaction: discord.Interaction):
     await interaction.response.send_message("Hello!")
-    
-@bot.command(name='kick', description="Kick a member from the server.")
+
+@bot.command(name='kick_member', description="Kick a member from the server.")
 @commands.has_permissions(kick_members=True)
-async def kick(ctx, member: discord.Member, *, reason=None):
+async def kick_member(ctx, member: discord.Member = None, *, reason=None):
+    if member is None:
+        await ctx.send("Please mention a user to kick. Usage: `!kick_member @user [reason]`")
+        return
+
     if reason is None:
         reason = "No reason provided"
     
     await member.kick(reason=reason)
     await ctx.send(f'{member.mention} has been kicked from the server. Reason: {reason}')
 
-@bot.tree.command(name="kick", description="Kick a member from the server.")
-@commands.has_permissions(kick_members=True)
-async def kick(interaction: discord.Interaction, member: discord.Member, reason: str = "No reason provided"):
-    await member.kick(reason=reason)
-    await interaction.response.send_message(f'{member.mention} has been kicked from the server. Reason: {reason}')
-
-@kick.error
-async def kick_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send("You don't have permission to kick members.")
-
-@kick.error
-async def kick_slash_error(interaction: discord.Interaction, error):
-    if isinstance(error, commands.MissingPermissions):
-        await interaction.response.send_message("You don't have permission to kick members.", ephemeral=True)
-
-
-
-
 bot.run('token')
-
