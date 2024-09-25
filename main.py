@@ -32,6 +32,17 @@ async def kick(interaction: discord.Interaction, member: discord.Member, reason:
     await member.kick(reason=reason)
     await interaction.response.send_message(f'{member.mention} has been kicked from the server. Reason: {reason}')
 
+@kick.error
+async def kick_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("You don't have permission to kick members.")
+
+@kick.error
+async def kick_slash_error(interaction: discord.Interaction, error):
+    if isinstance(error, commands.MissingPermissions):
+        await interaction.response.send_message("You don't have permission to kick members.", ephemeral=True)
+
+
 
 
 bot.run('token')
