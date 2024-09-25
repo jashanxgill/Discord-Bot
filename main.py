@@ -16,6 +16,23 @@ async def hello(ctx):
 @bot.tree.command(name="hello", description="Say hello!")
 async def hello(interaction: discord.Interaction):
     await interaction.response.send_message("Hello!")
+    
+@bot.command(name='kick', description="Kick a member from the server.")
+@commands.has_permissions(kick_members=True)
+async def kick(ctx, member: discord.Member, *, reason=None):
+    if reason is None:
+        reason = "No reason provided"
+    
+    await member.kick(reason=reason)
+    await ctx.send(f'{member.mention} has been kicked from the server. Reason: {reason}')
+
+@bot.tree.command(name="kick", description="Kick a member from the server.")
+@commands.has_permissions(kick_members=True)
+async def kick(interaction: discord.Interaction, member: discord.Member, reason: str = "No reason provided"):
+    await member.kick(reason=reason)
+    await interaction.response.send_message(f'{member.mention} has been kicked from the server. Reason: {reason}')
+
+
 
 bot.run('token')
 
