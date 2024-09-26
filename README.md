@@ -1,5 +1,5 @@
 # Discord-Bot
 Creating my Discord Bot in Python for educational purposes!
-# Features 
-Added Kick command
-Added Ban command
+# Commands 
+Kick command <br />
+Ban command
