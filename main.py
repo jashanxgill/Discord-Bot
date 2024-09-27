@@ -43,4 +43,5 @@ async def ban_member(ctx, member: discord.Member = None, *, reason=None):
     await member.ban(reason=reason)
     await ctx.send(f'{member.mention} has been banned from the server. Reason: {reason}')
 
+#put your token
 bot.run('token')
