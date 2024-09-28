@@ -4,6 +4,8 @@ import discord
 from discord.ext import commands
 
 prefix = "!"
+token = ""
+
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix=prefix, intents=intents)
 
@@ -47,4 +49,4 @@ async def ban_member(ctx, member: discord.Member = None, *, reason=None):
     await ctx.send(f'{member.mention} has been banned from the server. Reason: {reason}')
 
 #put your token
-bot.run('token')
+bot.run(token)
